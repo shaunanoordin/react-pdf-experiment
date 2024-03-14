@@ -8,7 +8,7 @@ Ref: https://react-pdf.org/
 */
 
 import React, { createElement as elem } from 'react'
-import ReactPDF, { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer'
+import ReactPDF, { Page, Text, View, Image, Document, StyleSheet } from '@react-pdf/renderer'
 
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -18,7 +18,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const styles = StyleSheet.create({
   page: {
     fontSize: '10mm',
-    backgroundColor: '#202020'
+    backgroundColor: '#202020',
   },
   main: {
     margin: '20mm',
@@ -28,17 +28,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
-    border: '2mm solid #00979d'
+    border: '2mm solid #00979d',
   },
   zooLogo: {
-
+    display: 'block',
+    width: '50mm',
+    margin: '0 auto',
   },
   bigText: {
     fontSize: '16mm',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   smallText: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
 })
 
@@ -47,6 +49,7 @@ const ZooniverseCertificate = ({ name }) => (
     Document, null,
     elem(Page, { size: 'A4', style: styles.page },
       elem(View, { style: styles.main },
+        elem(Image, { style: styles.zooLogo, src: `${__dirname}/assets/zooniverse-logo-teal.png` }),
         elem(Text, { style: styles.bigText },
           name
         ),
@@ -64,4 +67,3 @@ const names = ['Shaun']
 names.forEach((name) => {
   ReactPDF.render(elem(ZooniverseCertificate, { name }), `${__dirname}/${name}.pdf`)
 })
-
