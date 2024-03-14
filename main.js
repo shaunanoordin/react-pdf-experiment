@@ -61,9 +61,16 @@ const ZooniverseCertificate = ({ name }) => (
   )
 )
 
-// const names = ['Shaun', 'Sean', 'Mark']
-const names = ['Shaun']
+const names = ['Shaun', 'Sean', 'Mark']
+
+console.log('React-PDF Experiment')
+console.log(`This experiment will creates ${names.length} 'Zooniverse certificate' PDF files in the /output folder`)
+console.log(`Each certificate will have a Zooniverse logo and the name of one user: ${names.join(', ')}`)
 
 names.forEach((name) => {
-  ReactPDF.render(elem(ZooniverseCertificate, { name }), `${__dirname}/${name}.pdf`)
+  const filename = `${__dirname}/output/${name}.pdf`
+  ReactPDF.render(elem(ZooniverseCertificate, { name }), filename)
+  console.log(`- Created ${filename}`)
 })
+
+console.log('DONE')
