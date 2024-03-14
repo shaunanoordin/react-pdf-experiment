@@ -1,3 +1,12 @@
+/*
+Main script
+Creates PDF files. 
+Ref: https://react-pdf.org/
+
+- Script is run with node.
+- I couldn't properly set up JSX syntax, so I'm using React.createElement().
+*/
+
 import React, { createElement as elem } from 'react'
 import ReactPDF, { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer'
 
@@ -8,45 +17,51 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 // Create styles
 const styles = StyleSheet.create({
   page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4'
+    fontSize: '10mm',
+    backgroundColor: '#202020'
   },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1
-  }
+  main: {
+    margin: '20mm',
+    padding: '20mm',
+    flexGrow: 1,
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#ffffff',
+    border: '2mm solid #00979d'
+  },
+  zooLogo: {
+
+  },
+  bigText: {
+    fontSize: '16mm',
+    textAlign: 'center'
+  },
+  smallText: {
+    textAlign: 'center'
+  },
 })
 
-// Create Document Component
-const MyDocument = () => (
+const ZooniverseCertificate = ({ name }) => (
   elem(
     Document, null,
     elem(Page, { size: 'A4', style: styles.page },
-      elem(View, { style: styles.section },
-        elem(Text, null,
-          'Section #1'
-        )
-      ),
-      elem(View, { style: styles.section },
-        elem(Text, null,
-          'Section #2'
+      elem(View, { style: styles.main },
+        elem(Text, { style: styles.bigText },
+          name
+        ),
+        elem(Text, { style: styles.smallText },
+          'is a Zooniverse volunteer'
         )
       )
     )
   )
-  /*
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>Section #2</Text>
-      </View>
-    </Page>
-  </Document>
-  */
 )
 
-ReactPDF.render(elem(MyDocument), `${__dirname}/example.pdf`)
+// const names = ['Shaun', 'Sean', 'Mark']
+const names = ['Shaun']
+
+names.forEach((name) => {
+  ReactPDF.render(elem(ZooniverseCertificate, { name }), `${__dirname}/${name}.pdf`)
+})
+
